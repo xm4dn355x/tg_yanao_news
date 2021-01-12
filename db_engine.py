@@ -27,10 +27,10 @@ def get_all_db_data() -> list:
     return res
 
 
-def insert_data(title: str, url: str, source: str) -> None:
+def insert_data(title: str, url: str, author: str) -> None:
     """Получает заголовок ссылку и источник статьи и записывает их в БД"""
     cursor.execute(
-        f'''INSERT INTO news (title, url, author, status) VALUES ('{title}', '{url}', '{source}', FALSE )'''
+        f'''INSERT INTO news (title, url, author, status) VALUES ('{title}', '{url}', '{author}', FALSE )'''
     )
     conn.commit()
 
