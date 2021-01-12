@@ -56,7 +56,8 @@ def get_posts(html: str) -> list:
         header = post.find('div', class_='document__title')
         title = header.text.replace('\t', '').replace('\n', '').replace('     ', '').strip()
         url = header.find('a', class_='link').get('href')
-        author = post.find('div', class_='document__provider-name').text
+        author = post.find('div', class_='document__provider-name').text.replace(' ', '').replace('-', '').\
+            replace('.', '').replace('(', ' ').replace(')', '').replace('"', '').replace('\'', '')  # Под хэштэг
         res.append({
             'url': url,
             'title': title,
@@ -68,8 +69,8 @@ def get_posts(html: str) -> list:
 def get_current_news() -> list:
     """Сверяет спарсенные новости с новостями в БД и возвращает только свежие новости"""
     db_data = get_all_db_data()
-    parsed_news = get_posts(get_mock_html(url=URL))
-    # parsed_news = get_posts(get_mock_html('test.html'))
+    # parsed_news = get_posts(get_mock_html(url=URL))
+    parsed_news = get_posts(get_mock_html('test.html'))
     res = []
     for parsed in parsed_news:
         is_not_in_db = True
