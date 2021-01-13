@@ -69,13 +69,13 @@ def get_posts(html: str) -> list:
 def get_current_news() -> list:
     """Сверяет спарсенные новости с новостями в БД и возвращает только свежие новости"""
     db_data = get_all_db_data()
-    # parsed_news = get_posts(get_mock_html(url=URL))
-    parsed_news = get_posts(get_mock_html('test.html'))
+    parsed_news = get_posts(get_html(url=URL))
+    # parsed_news = get_posts(get_mock_html('test.html'))
     res = []
     for parsed in parsed_news:
         is_not_in_db = True
         for db in db_data:
-            if db['title'] == parsed['title']:
+            if db['url'] == parsed['url']:
                 is_not_in_db = False
         if is_not_in_db:
             res.append(parsed)
